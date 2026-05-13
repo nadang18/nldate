@@ -41,6 +41,21 @@ _NUMBER_WORDS = {
     "an": 1,
 }
 
+_MONTH_ABBREVIATIONS = (
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "sept",
+    "oct",
+    "nov",
+    "dec",
+)
+
 
 @dataclass(frozen=True)
 class _Offset:
@@ -154,6 +169,7 @@ def _parse_weekday(text: str, today: date) -> date | None:
 
 def _parse_concrete_date(text: str) -> date | None:
     cleaned = re.sub(r"\b(\d{1,2})(st|nd|rd|th)\b", r"\1", text)
+    cleaned = _remove_month_abbreviation_periods(cleaned)
     formats = (
         "%Y-%m-%d",
         "%Y/%m/%d",
@@ -172,6 +188,12 @@ def _parse_concrete_date(text: str) -> date | None:
         except ValueError:
             continue
     return None
+
+
+def _remove_month_abbreviation_periods(text: str) -> str:
+    for month in _MONTH_ABBREVIATIONS:
+        text = re.sub(rf"\b{month}\.", month, text)
+    return text
 
 
 def _strptime_date(text: str, fmt: str) -> date:
@@ -215,10 +237,7 @@ def _parse_number(text: str) -> int | None:
 
 def _add_offset(start: date, offset: _Offset) -> date:
     month_index = (
-        start.year * 12
-        + (start.month - 1)
-        + offset.years * 12
-        + offset.months
+        start.year * 12 + (start.month - 1) + offset.years * 12 + offset.months
     )
     year, month_zero = divmod(month_index, 12)
     month = month_zero + 1

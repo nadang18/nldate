@@ -19,6 +19,7 @@ REFERENCE = date(2025, 11, 5)  # Wednesday
         ("next Tuesday", date(2025, 11, 11)),
         ("last Friday", date(2025, 10, 31)),
         ("December 1st, 2025", date(2025, 12, 1)),
+        ("Dec. 1, 2025", date(2025, 12, 1)),
         ("2025-12-01", date(2025, 12, 1)),
         ("12/1/2025", date(2025, 12, 1)),
         ("5 days before December 1st, 2025", date(2025, 11, 26)),
