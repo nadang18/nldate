@@ -12,7 +12,9 @@ REFERENCE = date(2025, 11, 5)  # Wednesday
     [
         ("today", date(2025, 11, 5)),
         ("tomorrow", date(2025, 11, 6)),
+        ("the day after tomorrow", date(2025, 11, 7)),
         ("yesterday", date(2025, 11, 4)),
+        ("the day before yesterday", date(2025, 11, 3)),
         ("in 3 days", date(2025, 11, 8)),
         ("3 days from now", date(2025, 11, 8)),
         ("2 weeks ago", date(2025, 10, 22)),

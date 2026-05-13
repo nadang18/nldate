@@ -139,8 +139,12 @@ def _parse_anchor(text: str, today: date) -> date | None:
         return today
     if text == "tomorrow":
         return today + timedelta(days=1)
+    if text in {"day after tomorrow", "the day after tomorrow"}:
+        return today + timedelta(days=2)
     if text == "yesterday":
         return today - timedelta(days=1)
+    if text in {"day before yesterday", "the day before yesterday"}:
+        return today - timedelta(days=2)
 
     weekday = _parse_weekday(text, today)
     if weekday is not None:
